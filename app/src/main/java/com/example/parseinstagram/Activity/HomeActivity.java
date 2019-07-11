@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.parseinstagram.Fragments.ComposeFragment;
+import com.example.parseinstagram.Fragments.ProfileFragment;
 import com.example.parseinstagram.Fragments.TimelineFragment;
 import com.example.parseinstagram.Models.Post;
 import com.example.parseinstagram.R;
@@ -64,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
                         Toast.makeText(HomeActivity.this, "Home was Selected", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_profile:
-                        fragment = new ComposeFragment();
+                        fragment = new ProfileFragment();
                         Toast.makeText(HomeActivity.this, "Profile was Selected", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.newpost:

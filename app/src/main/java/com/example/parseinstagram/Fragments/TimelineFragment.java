@@ -23,8 +23,8 @@ import java.util.List;
 public class TimelineFragment extends Fragment {
     public static final String TAG = "PostsFragemnt";
     private RecyclerView rvPosts;
-    private PostAdapter adapter;
-    private ArrayList<Post> mPosts;
+    protected PostAdapter adapter;
+    protected ArrayList<Post> mPosts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -46,10 +46,11 @@ public class TimelineFragment extends Fragment {
         queryPosts();
 
     }
-    private void queryPosts() {
+    protected void queryPosts() {
         ParseQuery<Post> postQuery = new ParseQuery<Post>(Post.class);
         postQuery.include(Post.KEY_USER);
         postQuery.setLimit(20);
+        postQuery.addDescendingOrder(Post.KEY_CREATED_AT);
         postQuery.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {

@@ -4,57 +4,74 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.parseinstagram.Models.Post;
+import com.parse.ParseFile;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
-    private List<Post> mPosts;
-    private Context mContext;
-    private String mUserId;
-    private String mDescription;
-    private File mPicture;
 
+    private Context context;
+    private List<Post> posts;
 
-    public PostAdapter(Context context, String userId, String description, File picture, ArrayList<Post> posts) {
-        mPosts = posts;
-        this.mUserId = userId;
-        this.mDescription = description;
-        this.mPicture = picture;
-        mContext = context;
+    public PostAdapter(List<Post> posts) {
+        //this.context = context;
+        this.posts = posts;
     }
+
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View contactView = inflater.inflate(R.layout.item_post, parent,false);
+    public PostAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        View view = (View) LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(contactView);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
-        Post post = mPosts.get(position);
-        //confusion?
+        Post post = posts.get(position);
+
+        holder.tvHandle.setText(post.getUser().getUsername());
+        ParseFile image = post.getImage();
+        if (image != null) {
+            Glide.with(context)
+                    .load(image.getUrl())
+                    .into(holder.ivImage);
+        }
+        holder.tvDescription.setText(post.getDescription());
+        //holder.bind(post);
     }
 
     @Override
     public int getItemCount() {
-        return mPosts.size();
+        return posts.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ViewHolder(@NonNull View itemView) {
+        private TextView tvHandle;
+        private TextView tvDescription;
+        private ImageView ivImage;
+
+        public ViewHolder(View itemView) {
             super(itemView);
+            tvHandle = itemView.findViewById(R.id.tvHandle);
+            tvDescription = itemView.findViewById(R.id.tvDescription);
+            ivImage = itemView.findViewById(R.id.ivImage);
         }
     }
+
+    public void clear(){
+        posts.clear();
+        notifyDataSetChanged();;
+    }
+
 }
 

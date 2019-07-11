@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.parseinstagram.Fragments.ComposeFragment;
+import com.example.parseinstagram.Fragments.TimelineFragment;
 import com.example.parseinstagram.Models.Post;
 import com.example.parseinstagram.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -39,8 +40,8 @@ public class HomeActivity extends AppCompatActivity {
 
         // define your fragments here
         final Fragment fragment1 = new ComposeFragment();
-//        final Fragment fragment2 = new SecondFragment();
-//        final Fragment fragment3 = new ThirdFragment();
+        final Fragment fragment2 = new TimelineFragment();
+//      final Fragment fragment3 = new ThirdFragment();
 
         logoutbtn = findViewById(R.id.logout_btn);
 
@@ -59,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
                 Fragment fragment;
                 switch (item.getItemId()) {
                     case R.id.action_home:
-                        fragment = new ComposeFragment();
+                        fragment = new TimelineFragment();
                         Toast.makeText(HomeActivity.this, "Home was Selected", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_profile:
@@ -82,60 +83,6 @@ public class HomeActivity extends AppCompatActivity {
         bottomnavigationview.setSelectedItemId(R.id.action_home);
     }
 
-//    private void populateTImeline() {
-//        posts.clear();
-//        postAdapter.notifyDataSetChanged();
-//        client.getHomeTimeline(new JsonHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-//                Log.d("TwitterClient", response.toString());
-//                //iterate through the Json array
-//                //for each entry deserialize the JSON object
-//
-//                for (int i=0; i < response.length(); i++) {
-//                    //convert each object to a Tweet model
-//                    //add that Tweet model to our data source
-//                    // notify the adapter that we added an item
-//                    try {
-//                        Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
-//                        tweets.add(tweet);
-//                        tweetAdapter.notifyItemInserted(tweets.size() -1);
-//                        if (tweet.uid < max_id || max_id == -1) {
-//                            max_id = tweet.uid;
-//                        }
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//                Log.d("TwitterClient", response.toString());
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                Log.d("TwitterClient",responseString);
-//                throwable.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-//                Log.d("TwitterClient",errorResponse.toString());
-//                throwable.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-//                //Log.d("TwitterClient",errorResponse.toString());
-//                throwable.printStackTrace();
-//            }
-//        });
-//    }
-
     private void logout() {
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
@@ -148,7 +95,6 @@ public class HomeActivity extends AppCompatActivity {
 
         }
     }
-
 
     private void queryPosts() {
         ParseQuery<Post> postQuery = new ParseQuery<Post>(Post.class);

@@ -39,10 +39,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
-        // define your fragments here
-        final Fragment fragment1 = new ComposeFragment();
-        final Fragment fragment2 = new TimelineFragment();
-//      final Fragment fragment3 = new ThirdFragment();
 
         logoutbtn = findViewById(R.id.logout_btn);
 

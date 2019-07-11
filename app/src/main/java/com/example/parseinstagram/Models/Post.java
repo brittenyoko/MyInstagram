@@ -5,9 +5,10 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-@ParseClassName("Post")
-public class Post extends ParseObject {
+import java.io.Serializable;
 
+@ParseClassName("Post")
+public class Post extends ParseObject implements Serializable {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
@@ -37,4 +38,6 @@ public class Post extends ParseObject {
     public void setUser(ParseUser parseUser) {
         put(KEY_USER, parseUser);
     }
+
+
 }

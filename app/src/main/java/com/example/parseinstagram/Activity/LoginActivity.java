@@ -1,4 +1,4 @@
-package com.example.parseinstagram;
+package com.example.parseinstagram.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +9,12 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.parseinstagram.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private EditText usernameInput;
     private EditText passwordInput;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         usernameInput = findViewById(R.id.username_et);
         passwordInput = findViewById(R.id.password_et);
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         });
         if (currentUser != null) {
             // Hooray! The user is logged in.
-            final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            final Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
             finish();
         } else {
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 if (e == null)
                 {
                     Log.d("LoginActivity", "Login Successful");
-                    final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    final Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signUp () {
-        final Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+        final Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
         startActivity(intent);
     }
 

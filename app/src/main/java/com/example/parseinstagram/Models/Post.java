@@ -1,4 +1,4 @@
-package com.example.parseinstagram;
+package com.example.parseinstagram.Models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;

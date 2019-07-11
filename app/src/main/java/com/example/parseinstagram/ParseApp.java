@@ -2,6 +2,7 @@ package com.example.parseinstagram;
 
 import android.app.Application;
 
+import com.example.parseinstagram.Models.Post;
 import com.parse.Parse;
 import com.parse.ParseObject;
 

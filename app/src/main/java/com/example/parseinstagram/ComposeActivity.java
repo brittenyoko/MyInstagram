@@ -1,3 +1,7 @@
+
+// MOVED TO A FRAGMENT //
+
+
 //package com.example.parseinstagram;
 //
 //import android.content.Intent;

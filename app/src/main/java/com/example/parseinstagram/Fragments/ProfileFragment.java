@@ -28,14 +28,13 @@ public class ProfileFragment extends TimelineFragment {
                     return;
                 }
                 adapter.clear();
-                for (int i = 0; i < posts.size(); i++) {
-                    Post post = posts.get(i);
-                    mPosts.add(post);
-                    adapter.notifyItemInserted(mPosts.size() - 1);
-                    Log.d(TAG,"Post: "+ post.getDescription() + ", username " +  post.getUser().getUsername());
-                }
-
+                mPosts.addAll(posts);
+                adapter.notifyDataSetChanged();
             }
         });
+
+
     }
+
+
 }

@@ -28,7 +28,8 @@ public class TimelineFragment extends Fragment {
     protected PostAdapter adapter;
     protected ArrayList<Post> mPosts;
     protected SwipeRefreshLayout swipeContainer;
-    private int pagesize = 20;
+    private int pagesize = 10;
+    private int currentpage = 0;
 
 
     private EndlessRecyclerViewScrollListener scrollListener;
@@ -72,7 +73,7 @@ public class TimelineFragment extends Fragment {
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                loadNextDataFromApi(page);
+                loadNextDataFromApi();
             }
         };
         rvPosts.addOnScrollListener(scrollListener);
@@ -81,12 +82,14 @@ public class TimelineFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-        queryPosts();
+        loadNextDataFromApi();
     }
 
-    private void loadNextDataFromApi(final int page) {
+    private void loadNextDataFromApi() {
+
         ParseQuery<Post> postQuery = new ParseQuery<Post>(Post.class);
         postQuery.include(Post.KEY_USER);
+        postQuery.setSkip(currentpage++ * pagesize);
         postQuery.addDescendingOrder(Post.KEY_CREATED_AT);
         postQuery.findInBackground(new FindCallback<Post>() {
             @Override
@@ -96,23 +99,8 @@ public class TimelineFragment extends Fragment {
                     e.printStackTrace();
                     return;
                 }
-                adapter.clear();
-                for (int i = pagesize * page; i < posts.size(); i++) {
-                    if (i < pagesize * page + 1) {
-                        break;
-                    }
-                    Post post = posts.get(i);
-                    mPosts.add(post);
-                }
+                mPosts.addAll(posts);
                 adapter.notifyDataSetChanged();
-                for (int i = 0; i < posts.size(); i++) {
-                    Post post = posts.get(i);
-
-                    mPosts.add(post);
-                    adapter.notifyItemInserted(mPosts.size() - 1);
-                    Log.d(TAG,"Post: "+ post.getDescription() + ", username " +  post.getUser().getUsername());
-                }
-
             }
         });
     }
@@ -125,6 +113,9 @@ public class TimelineFragment extends Fragment {
     }
 
     protected void queryPosts() {
+
+        adapter.clear();
+
         ParseQuery<Post> postQuery = new ParseQuery<Post>(Post.class);
         postQuery.include(Post.KEY_USER);
         postQuery.setLimit(pagesize);
@@ -137,14 +128,8 @@ public class TimelineFragment extends Fragment {
                     e.printStackTrace();
                     return;
                 }
-                adapter.clear();
-                for (int i = 0; i < posts.size(); i++) {
-                    Post post = posts.get(i);
-                    mPosts.add(post);
-                    adapter.notifyItemInserted(mPosts.size() - 1);
-                Log.d(TAG,"Post: "+ post.getDescription() + ", username " +  post.getUser().getUsername());
-                }
-
+                mPosts.addAll(posts);
+                adapter.notifyDataSetChanged();
             }
         });
     }
